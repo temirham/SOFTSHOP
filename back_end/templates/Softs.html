@@ -1,0 +1,38 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Мероприятия{% endblock %}
+{% block content %}
+
+<ul>
+        {% if data.input_text == 1 %}
+           {% include 'qw.html' with element=data.Softs.0 %}
+            <button type="submit" form="data"}>Удалить</button>
+        {% elif data.input_text == 2%}
+            {% include 'qw.html' with element=data.Softs.0 %}
+            <button type="submit" form="data">Удалить</button>
+            {% include 'qw.html' with element=data.Softs.1 %}
+            <button type="submit" form="data">Удалить</button>
+        {% elif data.input_text == 3%}
+            {% include 'qw.html' with element=data.Softs.0 %}
+            <button type="submit" form="data">Удалить</button>
+            {% include 'qw.html' with element=data.Softs.1 %}
+            <button type="submit" form="data">Удалить</button>
+            {% include 'qw.html' with element=data.Softs.2 %}
+            <button type="submit" form="data">Удалить</button>
+        {% else %}
+            {% for soft in data.Softs %}
+                {% include 'qw.html' with element=soft %}
+                <form action = "DelSoft" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <input style="display: none" name="text" value="{{ soft.id }}" type="">
+                    <input type="submit" value="Удалить">
+                </form>
+            {% empty %}
+                 <li>Список пуст</li>
+            {% endfor %}
+        {% endif %}
+</ul>
+
+{% endblock %}
+
